@@ -20,11 +20,12 @@ angular.module('app')
       });
 
       // If the person is logged in, attempt to find their developer goal
-      $scope.my_solution = $api.solution_get(issue.id).then(function(my_solution) {
+      $scope.my_solution_promise = $api.solution_get(issue.id).then(function(my_solution) {
         $scope.initializing = false;
 
         $scope.set_status_for_solution(my_solution);
 
+        $scope.my_solution = my_solution;
         return my_solution;
       });
 
@@ -37,7 +38,7 @@ angular.module('app')
 
       // Restart a solution that the logged in user said they stopped working on
       $scope.restart_solution = function () {
-        $scope.my_solution.then(function() {
+        $scope.my_solution_promise.then(function() {
           $api.restart_solution(issue.id).then(function(updated_solution) {
             $scope.$emit('solutionUpdatePushed', updated_solution);
           });
@@ -46,7 +47,7 @@ angular.module('app')
 
       // Stop working on a solution that the logged in user started
       $scope.stop_solution = function () {
-        $scope.my_solution.then(function() {
+        $scope.my_solution_promise.then(function() {
           $api.stop_solution(issue.id).then(function(updated_solution) {
             $scope.$emit('solutionUpdatePushed', updated_solution);
           });
@@ -55,7 +56,7 @@ angular.module('app')
 
       // Declare that the logged in person is continuing to work on their solution
       $scope.checkin_solution = function () {
-        $scope.my_solution.then(function() {
+        $scope.my_solution_promise.then(function() {
           $api.checkin_solution(issue.id).then(function(updated_solution) {
             $scope.$emit('solutionUpdatePushed', updated_solution);
           });
@@ -64,7 +65,7 @@ angular.module('app')
 
       // Declare that the logged in person is finished working on their solution
       $scope.complete_solution = function () {
-        $scope.my_solution.then(function() {
+        $scope.my_solution_promise.then(function() {
           $api.complete_solution(issue.id).then(function(updated_solution) {
             $scope.$emit('solutionUpdatePushed', updated_solution);
           });

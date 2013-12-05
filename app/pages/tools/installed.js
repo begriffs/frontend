@@ -18,10 +18,7 @@ angular.module('app')
   }).
   controller("InstalledPluginsController", function($scope, $api) {
     // Nested callbacks to filter out trackers that don't have a plugin
-    $scope.plugins.then(function(plugins) {
-
-      console.log(plugins);
-
+    $scope.plugins_promise.then(function(plugins) {
       var all_trackers_map = {}, tracker_name;
       for (var i=0; i<plugins.length; i++) {
         tracker_name = plugins[i].tracker.full_name.split('/')[0];
@@ -49,6 +46,4 @@ angular.module('app')
     });
 
     $scope.hide_installed_button = true;
-
-    $scope.$watch('all_trackers', function(dat) { console.log('dat', dat); });
   });

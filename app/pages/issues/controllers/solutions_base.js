@@ -1,13 +1,13 @@
 'use strict';
 
 angular.module('app')
-  .controller('SolutionsBaseController', function ($rootScope, $scope, $api, $filter, $q) {
+  .controller('SolutionsBaseController', function ($rootScope, $scope, $api, $filter, $q, $routeParams) {
     $scope.initializing = true;
 
     $scope.my_solution = undefined;
     $scope.bounty_total = 0;
 
-    $scope.issue.then(function(issue) {
+    $api.issue_get($routeParams.id).then(function(issue) {
       $scope.bounty_total = parseInt(issue.bounty_total, 10);
 
       $api.solutions_get(issue.id).then(function(solutions) {

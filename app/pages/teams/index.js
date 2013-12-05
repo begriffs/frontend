@@ -12,5 +12,8 @@ angular.module('app')
   .controller('TeamsIndexController', function ($scope, $location, $api, $pageTitle) {
     $pageTitle.set("Teams");
 
-    $scope.teams = $api.list_teams();
+    $api.list_teams().then(function(teams) {
+      $scope.teams = teams;
+      return teams;
+    });
   });

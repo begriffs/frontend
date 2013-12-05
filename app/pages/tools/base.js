@@ -53,7 +53,7 @@ angular.module('app')
       });
     };
 
-    $scope.all_trackers = $api.trackers_get().then(function(trackers) {
+    $api.trackers_get().then(function(trackers) {
       $scope.trackers_count = trackers.length;
       $scope.loading_trackers = false;
 
@@ -81,10 +81,11 @@ angular.module('app')
         }
       });
 
+      $scope.all_trackers = owner_trackers;
       return owner_trackers;
     });
 
-    $scope.plugins = $api.tracker_plugins_get().then(function(plugins) {
+    $api.tracker_plugins_get().then(function(plugins) {
       // Get the plugin for a tracker, if installed.
       // if not installed, return model for a new plugin
       $scope.tracker_plugins_count = plugins.length;
@@ -186,6 +187,8 @@ angular.module('app')
           }
         }
       };
+
+      $scope.plugins = plugins;
       return plugins;
     });
   });

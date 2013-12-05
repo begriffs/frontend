@@ -39,7 +39,8 @@ angular.module('app')
     // randomly includes partial
     $scope.expiration = Math.floor(Math.random()*2);
 
-    $scope.issue = $api.issue_get($routeParams.id).then(function(issue) {
+    $api.issue_get($routeParams.id).then(function(issue) {
+      $scope.bounty.item_number = "issues/"+issue.id;
       $scope.create_payment = function() {
         var attrs = angular.copy($scope.bounty);
         delete attrs.fee;
@@ -84,6 +85,7 @@ angular.module('app')
         });
       };
 
+      $scope.issue = issue;
       return issue;
     });
 
@@ -92,7 +94,7 @@ angular.module('app')
       if (person) {
         // select the team once loaded.
         // if it's enterprise, then we need to know so that we hide the fees
-        $scope.teams = $api.person_teams(person.id).then(function(teams) {
+        $api.person_teams(person.id).then(function(teams) {
           // oh god, that's like the wost line of JS I have ever written
           var team_id = parseInt(((($scope.bounty.checkout_method).match(/^team\/(\d+)$/) || {})[1]), 10);
 
@@ -105,6 +107,7 @@ angular.module('app')
             }
           }
 
+          $scope.teams = teams;
           return teams;
         });
 

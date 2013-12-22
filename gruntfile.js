@@ -14,18 +14,6 @@ module.exports = function (grunt) {
       options: {
         livereload: true
       },
-//      coffee: {
-//        files: ['app/pages/**/*.coffee'],
-//        tasks: ['coffee:dist']
-//      },
-//      coffeeTest: {
-//        files: ['test/spec/**/*.coffee'],
-//        tasks: ['coffee:test']
-//      },
-//      compass: {
-//        files: ['app/styles/**/*.{scss,sass}'],
-//        tasks: ['compass']
-//      },
       jshint: {
         files: ['gruntfile.js', 'app/pages/**/*.js', 'test/**/*.js'],
         tasks: ['jshint']
@@ -89,9 +77,6 @@ module.exports = function (grunt) {
     open: {
       app: {
         url: 'http://localhost:<%= connect.app.options.port %>'
-      },
-      e2e: {
-        url: 'http://localhost:<%= connect.app.options.port %>/test.html'
       }
     },
     clean: {
@@ -123,48 +108,8 @@ module.exports = function (grunt) {
     karma: {
       unit: {
         configFile: 'karma-unit.conf.js'
-      },
-      e2e: {
-        configFile: 'karma-e2e.conf.js'
-      },
+      }
     },
-//    coffee: {
-//      dist: {
-//        files: [{
-//          expand: true,
-//          cwd: 'app/pages',
-//          src: '**/*.coffee',
-//          dest: '.tmp/pages',
-//          ext: '.js'
-//        }]
-//      },
-//      test: {
-//        files: [{
-//          expand: true,
-//          cwd: 'test/spec',
-//          src: '**/*.coffee',
-//          dest: '.tmp/spec',
-//          ext: '.js'
-//        }]
-//      }
-//    },
-//    compass: {
-//      options: {
-//        sassDir: 'app/styles',
-//        cssDir: '.tmp/styles',
-//        imagesDir: 'app/images',
-//        javascriptsDir: 'app/pages',
-//        fontsDir: 'app/styles/fonts',
-//        importPath: 'app/components',
-//        relativeAssets: true
-//      },
-//      dist: {},
-//      server: {
-//        options: {
-//          debugInfo: true
-//        }
-//      }
-//    },
     html_src: {
       dist: {
         files: {
@@ -326,6 +271,22 @@ module.exports = function (grunt) {
       options: {
         coverage_dir: 'coverage/'
       }
+    },
+    protractor: {
+      options: {
+        configFile: "protractor.conf.js", // Default config file
+        keepAlive: true, // If false, the grunt process stops when the test fails.
+        noColor: false, // If true, protractor will not use colors in its output.
+        args: {
+          // Arguments passed to the command
+        }
+      },
+      e2e: {
+        options: {
+          configFile: "protractor.conf.js", // Target-specific config file
+          args: {} // Target-specific arguments
+        }
+      }
     }
   });
 
@@ -388,7 +349,6 @@ module.exports = function (grunt) {
     'clean:server',
     'jshint',
     'connect:test',
-    'karma:e2e'
   ]);
 
   grunt.registerTask('test:travis', [
